@@ -10,14 +10,24 @@ class EmailController
     private $db;
     private $requestMethod;
     private $emailId;
+    private $search;
+    private $emailFilter;
+    private $orderBy;
+    private $order;
+
 
     private $emailGateway;
 
-    public function __construct($db, $requestMethod, $emailId)
+    public function __construct($db, $requestMethod, $emailId, $search, $emailFilter, $orderBy, $order)
     {
         $this->db = $db;
         $this->requestMethod = $requestMethod;
         $this->emailId = $emailId;
+
+        $this->$search;
+        $this->$emailFilter;
+        $this->$orderBy;
+        $this->$order;
 
         $this->emailGateway = new EmailGateway($db);
     }
@@ -28,15 +38,19 @@ class EmailController
             case 'GET':
                 if ($this->emailId) {
                     $response = $this->getUser($this->emailId);
+                } else if (
+                    $this->$search &&
+                    $this->$emailFilter &&
+                    $this->$orderBy &&
+                    $this->$order
+                ) {
+                    $response = $this->getAllEmails();
                 } else {
-                    $response = $this->getAllUsers();
-                };
+                    $response = $this->groupByEmail();
+                }
                 break;
             case 'POST':
-                $response = $this->createUserFromRequest();
-                break;
-            case 'PUT':
-                $response = $this->updateUserFromRequest($this->emailId);
+                $response = $this->createEmailFromRequest();
                 break;
             case 'DELETE':
                 $response = $this->deleteUser($this->emailId);
@@ -51,9 +65,9 @@ class EmailController
         }
     }
 
-    private function getAllUsers()
+    private function getAllEmails()
     {
-        $result = $this->emailGateway->findAll();
+        $result = $this->emailGateway->findAll($id, $search, $emailFilter, $orderBy, $order);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode($result);
         return $response;
@@ -70,10 +84,10 @@ class EmailController
         return $response;
     }
 
-    private function createUserFromRequest()
+    private function createEmailFromRequest()
     {
         $input = (array) json_decode(file_get_contents('php://input'), TRUE);
-        if (!$this->validatePerson($input)) {
+        if (!$this->validateEmail($input)) {
             return $this->unprocessableEntityResponse();
         }
         $this->emailGateway->insert($input);
@@ -82,21 +96,6 @@ class EmailController
         return $response;
     }
 
-    private function updateUserFromRequest($id)
-    {
-        $result = $this->emailGateway->find($id);
-        if (!$result) {
-            return $this->notFoundResponse();
-        }
-        $input = (array) json_decode(file_get_contents('php://input'), TRUE);
-        if (!$this->validatePerson($input)) {
-            return $this->unprocessableEntityResponse();
-        }
-        $this->emailGateway->update($id, $input);
-        $response['status_code_header'] = 'HTTP/1.1 200 OK';
-        $response['body'] = null;
-        return $response;
-    }
 
     private function deleteUser($id)
     {
@@ -110,7 +109,7 @@ class EmailController
         return $response;
     }
 
-    private function validatePerson($input)
+    private function validateEmail($input)
     {
         if (!isset($input['firstname'])) {
             return false;

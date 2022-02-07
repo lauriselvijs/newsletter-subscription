@@ -25,8 +25,25 @@ if (isset($uri[2])) {
     $emailId = (int) $uri[2];
 }
 
+$search = null;
+if (isset($uri[3])) {
+    $search = (string) $uri[3];
+}
+$emailFilter = null;
+if (isset($uri[4])) {
+    $emailFilter = (string) $uri[4];
+}
+$orderBy = null;
+if (isset($uri[5])) {
+    $orderBy = (string) $uri[5];
+}
+$order = null;
+if (isset($uri[6])) {
+    $order = (string) $uri[6];
+}
+
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 
 // pass the request method and user ID to the EmailController and process the HTTP request:
-$controller = new EmailController($dbConnection, $requestMethod, $emailId);
+$controller = new EmailController($dbConnection, $requestMethod, $emailId, $search, $emailFilter, $orderBy, $order);
 $controller->processRequest();

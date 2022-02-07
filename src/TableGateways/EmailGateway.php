@@ -12,17 +12,30 @@ class EmailGateway
         $this->db = $db;
     }
 
-    public function findAll()
+    public function findAll($id, $search, $emailFilter, $orderBy, $order)
     {
-        $statement = "
-            SELECT 
-                id, firstname, lastname, firstparent_id, secondparent_id
-            FROM
-                person;
-        ";
+
+        $statement = '
+        SELECT 
+            e.id,
+            e.email_name,
+            e.created_at
+        FROM 
+            emails e
+        WHERE 
+            e.email_name 
+        LIKE 
+            \'%' . $search . '%\' 
+        AND 
+            e.email_name 
+        LIKE 
+            \'%' . $emailFilter . '%\'
+        ORDER BY
+            e.' . $orderBy . ' ' . $order . "";
 
         try {
-            $statement = $this->db->query($statement);
+            $statement = $this->db->prepare($statement);
+            $statement->execute(array($id));
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $result;
         } catch (\PDOException $e) {
@@ -34,10 +47,10 @@ class EmailGateway
     {
         $statement = "
             SELECT 
-                id, firstname, lastname, firstparent_id, secondparent_id
+                e.id, e.email_name, e.created_at
             FROM
-                person
-            WHERE id = ?;
+                emails e
+            WHERE e.id = ?;
         ";
 
         try {
@@ -50,22 +63,43 @@ class EmailGateway
         }
     }
 
+
+    public function group()
+    {
+        $statement = "
+        SELECT   
+            substring_index(email_name, \'@\', -1) AS \'domain\', count(*) AS \'COUNT\'
+        FROM     
+            emails
+        GROUP BY 
+            domain";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->execute();
+            $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            return $result;
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }
+    }
+
     public function insert(array $input)
     {
         $statement = "
-            INSERT INTO person 
-                (firstname, lastname, firstparent_id, secondparent_id)
+            INSERT INTO emails 
+                (email_name)
             VALUES
-                (:firstname, :lastname, :firstparent_id, :secondparent_id);
+                (:email_name);
         ";
 
         try {
             $statement = $this->db->prepare($statement);
+
+            // need validation
+
             $statement->execute(array(
-                'firstname' => $input['firstname'],
-                'lastname'  => $input['lastname'],
-                'firstparent_id' => $input['firstparent_id'] ?? null,
-                'secondparent_id' => $input['secondparent_id'] ?? null,
+                'email_name' => $input['email_name'],
             ));
             return $statement->rowCount();
         } catch (\PDOException $e) {
@@ -73,38 +107,15 @@ class EmailGateway
         }
     }
 
-    public function update($id, array $input)
-    {
-        $statement = "
-            UPDATE person
-            SET 
-                firstname = :firstname,
-                lastname  = :lastname,
-                firstparent_id = :firstparent_id,
-                secondparent_id = :secondparent_id
-            WHERE id = :id;
-        ";
-
-        try {
-            $statement = $this->db->prepare($statement);
-            $statement->execute(array(
-                'id' => (int) $id,
-                'firstname' => $input['firstname'],
-                'lastname'  => $input['lastname'],
-                'firstparent_id' => $input['firstparent_id'] ?? null,
-                'secondparent_id' => $input['secondparent_id'] ?? null,
-            ));
-            return $statement->rowCount();
-        } catch (\PDOException $e) {
-            exit($e->getMessage());
-        }
-    }
 
     public function delete($id)
     {
         $statement = "
-            DELETE FROM person
-            WHERE id = :id;
+        DELETE 
+        FROM 
+            emails 
+        WHERE 
+            id = :id
         ";
 
         try {
