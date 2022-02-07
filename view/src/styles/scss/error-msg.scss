@@ -1,0 +1,17 @@
+@use "colors";
+@use "text";
+
+.error-ms {
+  position: absolute;
+  width: 400px;
+  height: 56px;
+  left: 140px;
+  top: 610px;
+  font-family: text.$font-family-subheading;
+  font-style: normal;
+  font-weight: normal;
+  font-size: text.$font-size-subheading;
+  line-height: text.$line-height-subheading;
+  color: colors.$grey;
+  white-space: nowrap;
+}

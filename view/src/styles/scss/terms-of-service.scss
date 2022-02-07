@@ -1,0 +1,25 @@
+@use "colors";
+@use "text";
+
+.checkmark {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  left: 140px;
+  top: 663px;
+  accent-color: colors.$blue;
+}
+
+.agree-text {
+  position: absolute;
+  width: 359px;
+  height: 28px;
+  left: 181px;
+  top: 662px;
+  font-family: text.$font-family-subheading;
+  font-style: normal;
+  font-weight: normal;
+  font-size: text.$font-size-subheading;
+  line-height: text.$line-height-subheading;
+  color: colors.$grey;
+}

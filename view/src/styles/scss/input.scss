@@ -1,0 +1,76 @@
+@use "colors";
+@use "text";
+
+.input-box {
+  position: absolute;
+  width: 663px;
+  height: 70px;
+  left: 100px;
+  top: 539px;
+  background: #ffffff;
+  border: 1px solid colors.$light_grey;
+  box-sizing: border-box;
+  z-index: 1;
+  text-indent: 44px;
+  font-size: text.$font-size-subheading;
+  line-height: text.$line-height-subheading;
+}
+
+input:hover {
+  border: 1px solid colors.$blue;
+  box-shadow: 0px 30px 40px rgba(19, 24, 33, 0.06);
+}
+
+input:focus {
+  box-shadow: 0px 30px 40px rgba(19, 24, 33, 0.06);
+}
+
+.input-box::placeholder {
+  font-family: text.$font-family-subheading;
+  font-style: normal;
+  font-weight: normal;
+  font-size: text.$font-size-subheading;
+  line-height: text.$line-height-subheading;
+  color: colors.$grey;
+}
+
+.input-box::placeholder:hover {
+  color: colors.$black;
+}
+
+.ic-arrow {
+  position: absolute;
+  width: 24px;
+  height: 14px;
+  left: 699px;
+  top: 567px;
+  z-index: 1;
+  opacity: 0.3;
+  cursor: pointer;
+}
+
+.ic-arrow:hover {
+  opacity: 1;
+}
+
+.vertical-line {
+  position: absolute;
+  width: 4px;
+  height: 70px;
+  left: 100px;
+  top: 539px;
+  background: colors.$blue;
+  z-index: 1;
+}
+
+.ic-arrow:hover {
+  border: none;
+  box-sizing: none;
+  box-shadow: none;
+}
+
+.ic-arrow:focus {
+  border: none;
+  box-sizing: none;
+  box-shadow: none;
+}

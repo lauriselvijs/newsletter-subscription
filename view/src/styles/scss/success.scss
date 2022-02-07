@@ -1,0 +1,40 @@
+@use "colors";
+@use "text";
+
+.ic-success {
+  position: absolute;
+  width: 44px;
+  height: 70px;
+  left: 140px;
+  top: 269px;
+}
+
+.success-heading {
+  position: absolute;
+  width: 400px;
+  height: 44px;
+  left: 140px;
+  top: 369px;
+
+  font-family: text.$font-family-heading;
+  font-style: normal;
+  font-weight: normal;
+  font-size: text.$font-size-heading;
+  line-height: text.$line-height-heading;
+  color: colors.$black;
+}
+
+.success-subheading {
+  position: absolute;
+  width: 400px;
+  height: 56px;
+  left: 140px;
+  top: 433px;
+
+  font-family: text.$font-family-subheading;
+  font-style: normal;
+  font-weight: normal;
+  font-size: text.$font-size-subheading;
+  line-height: text.$line-height-subheading;
+  color: colors.$grey;
+}

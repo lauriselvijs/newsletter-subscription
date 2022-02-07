@@ -1,0 +1,36 @@
+@use "colors";
+@use "text";
+
+.desktop {
+  position: relative;
+  width: 1920px;
+  height: 1080px;
+  background: #ffffff;
+
+  .base-section {
+    position: absolute;
+    width: 680px;
+    height: 1080px;
+    left: 0px;
+    top: 0px;
+    background: linear-gradient(180deg, #ffffff 0%, colors.$light-blue 100%);
+
+    .horizontal-line {
+      position: absolute;
+      width: 400px;
+      height: 1px;
+      left: 140px;
+      top: 740px;
+      background: colors.$light-grey;
+    }
+  }
+
+  .image-summer {
+    position: absolute;
+    max-width: 1240px;
+    height: 1080px;
+    left: 680px;
+    top: 0px;
+    background: #c4c4c4;
+  }
+}

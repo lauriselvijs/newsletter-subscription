@@ -1,0 +1,89 @@
+@use "colors";
+@use "text";
+
+.top-bar {
+  position: absolute;
+  width: 480px;
+  height: 40px;
+  left: 100px;
+  top: 100px;
+}
+
+.pineapples-logo {
+  position: absolute;
+  width: 118px;
+  height: 40px;
+  left: 100px;
+  top: 100px;
+}
+
+.email-data {
+  position: absolute;
+  width: 56px;
+  height: 26px;
+  left: 255px;
+  top: 114px;
+  font-family: text.$font-family-subheading;
+  font-style: normal;
+  font-weight: normal;
+  font-size: text.$font-size-subheading;
+  line-height: text.$line-height-subheading;
+  color: colors.$grey;
+  text-decoration: none;
+}
+
+.about {
+  position: absolute;
+  width: 42px;
+  height: 26px;
+  left: 331px;
+  top: 114px;
+  font-family: text.$font-family-subheading;
+  font-style: normal;
+  font-weight: normal;
+  font-size: text.$font-size-subheading;
+  line-height: text.$line-height-subheading;
+  color: colors.$grey;
+  text-decoration: none;
+}
+
+.how-it-works {
+  position: absolute;
+  width: 91px;
+  height: 26px;
+  left: 403px;
+  top: 114px;
+  font-family: text.$font-family-subheading;
+  font-style: normal;
+  font-weight: normal;
+  font-size: text.$font-size-subheading;
+  line-height: text.$line-height-subheading;
+  color: colors.$grey;
+  text-decoration: none;
+}
+
+.contact {
+  position: absolute;
+  width: 56px;
+  height: 26px;
+  left: 524px;
+  top: 114px;
+  font-family: text.$font-family-subheading;
+  font-style: normal;
+  font-weight: normal;
+  font-size: text.$font-size-subheading;
+  line-height: text.$line-height-subheading;
+  color: colors.$grey;
+  text-decoration: none;
+}
+
+/* mouse over link */
+a:hover {
+  text-decoration-line: underline;
+  color: colors.$blue;
+}
+
+a:active {
+  text-decoration-line: underline;
+  color: colors.$blue;
+}

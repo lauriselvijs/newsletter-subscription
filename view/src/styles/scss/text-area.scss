@@ -1,0 +1,30 @@
+@use "colors";
+@use "text";
+
+.header {
+  position: absolute;
+  width: 399px;
+  height: 44px;
+  left: 140px;
+  top: 374px;
+  font-family: text.$font-family-heading;
+  font-style: normal;
+  font-weight: normal;
+  font-size: text.$font-size-heading;
+  line-height: text.$line-height-heading;
+  color: colors.$black;
+}
+
+.subheading {
+  position: absolute;
+  width: 400px;
+  height: 56px;
+  left: 140px;
+  top: 433px;
+  font-family: text.$font-family-subheading;
+  font-style: normal;
+  font-weight: normal;
+  font-size: text.$font-size-subheading;
+  line-height: text.$line-height-subheading;
+  color: colors.$grey;
+}
