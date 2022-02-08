@@ -1,4 +1,5 @@
 <?php
+
 require "../bootstrap.php";
 
 use Src\Controller\EmailController;
@@ -12,38 +13,40 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode('/', $uri);
 
-// all of our endpoints start with /person
+// all of our endpoints start with /emails
 // everything else results in a 404 Not Found
-if ($uri[1] !== 'person') {
+if ($uri[1] !== 'emails') {
     header("HTTP/1.1 404 Not Found");
     exit();
 }
 
-// the user id is, of course, optional and must be a number:
 $emailId = null;
-if (isset($uri[2])) {
-    $emailId = (int) $uri[2];
+if (isset($_GET['email_id'])) {
+    $emailId = (int) $_GET['email_id'];
 }
 
 $search = null;
-if (isset($uri[3])) {
-    $search = (string) $uri[3];
+if (isset($_GET['search'])) {
+    $search = (string) $_GET['search'];
 }
+
 $emailFilter = null;
-if (isset($uri[4])) {
-    $emailFilter = (string) $uri[4];
+if (isset($_GET['email_filter'])) {
+    $emailFilter = (string) $_GET['email_filter'];
 }
+
 $orderBy = null;
-if (isset($uri[5])) {
-    $orderBy = (string) $uri[5];
+if (isset($_GET['order_by'])) {
+    $orderBy = (string) $_GET['order_by'];
 }
+
 $order = null;
-if (isset($uri[6])) {
-    $order = (string) $uri[6];
+if (isset($_GET['order'])) {
+    $order = (string) $_GET['order'];
 }
 
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 
-// pass the request method and user ID to the EmailController and process the HTTP request:
+// pass the request method and params to the EmailController and process the HTTP request:
 $controller = new EmailController($dbConnection, $requestMethod, $emailId, $search, $emailFilter, $orderBy, $order);
 $controller->processRequest();

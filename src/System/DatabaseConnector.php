@@ -4,7 +4,6 @@ namespace Src\System;
 
 class DatabaseConnector
 {
-
     private $dbConnection = null;
 
     public function __construct()

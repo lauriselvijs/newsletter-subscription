@@ -6,15 +6,16 @@ use Src\TableGateways\EmailGateway;
 
 class EmailController
 {
-
     private $db;
     private $requestMethod;
     private $emailId;
+
     private $search;
     private $emailFilter;
     private $orderBy;
     private $order;
 
+    private $errorMsg;
 
     private $emailGateway;
 
@@ -24,10 +25,10 @@ class EmailController
         $this->requestMethod = $requestMethod;
         $this->emailId = $emailId;
 
-        $this->$search;
-        $this->$emailFilter;
-        $this->$orderBy;
-        $this->$order;
+        $this->search = $search;
+        $this->emailFilter = $emailFilter;
+        $this->orderBy = $orderBy;
+        $this->order = $order;
 
         $this->emailGateway = new EmailGateway($db);
     }
@@ -37,14 +38,19 @@ class EmailController
         switch ($this->requestMethod) {
             case 'GET':
                 if ($this->emailId) {
-                    $response = $this->getUser($this->emailId);
-                } else if (
-                    $this->$search &&
-                    $this->$emailFilter &&
-                    $this->$orderBy &&
-                    $this->$order
+                    $response = $this->getEmail($this->emailId);
+                } elseif (
+                    $this->search
+                    || $this->emailFilter
+                    || $this->orderBy
+                    || $this->order
                 ) {
-                    $response = $this->getAllEmails();
+                    $response = $this->getAllEmails(
+                        $this->search,
+                        $this->emailFilter,
+                        $this->orderBy,
+                        $this->order
+                    );
                 } else {
                     $response = $this->groupByEmail();
                 }
@@ -65,15 +71,15 @@ class EmailController
         }
     }
 
-    private function getAllEmails()
+    private function getAllEmails($search, $emailFilter, $orderBy, $order)
     {
-        $result = $this->emailGateway->findAll($id, $search, $emailFilter, $orderBy, $order);
+        $result = $this->emailGateway->findAll($search, $emailFilter, $orderBy, $order);
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = json_encode($result);
         return $response;
     }
 
-    private function getUser($id)
+    private function getEmail($id)
     {
         $result = $this->emailGateway->find($id);
         if (!$result) {
@@ -84,11 +90,19 @@ class EmailController
         return $response;
     }
 
+    private function groupByEmail()
+    {
+        $result = $this->emailGateway->group();
+        $response['status_code_header'] = 'HTTP/1.1 200 OK';
+        $response['body'] = json_encode($result);
+        return $response;
+    }
+
     private function createEmailFromRequest()
     {
-        $input = (array) json_decode(file_get_contents('php://input'), TRUE);
+        $input = (array) json_decode(file_get_contents('php://input'), true);
         if (!$this->validateEmail($input)) {
-            return $this->unprocessableEntityResponse();
+            return $this->unprocessableEntityResponse($this->getErrorMsg());
         }
         $this->emailGateway->insert($input);
         $response['status_code_header'] = 'HTTP/1.1 201 Created';
@@ -111,21 +125,33 @@ class EmailController
 
     private function validateEmail($input)
     {
-        if (!isset($input['firstname'])) {
+
+        $emailDomainPattern = '/^\w+@[a-zA-Z_]+?\.[co]{2}$/';
+        if (!isset($input['email_name'])) {
+            $this->setErrorMsg("Email address is required");
+            return false;
+        } elseif (!filter_var($input['email_name'], FILTER_VALIDATE_EMAIL)) {
+            $this->setErrorMsg("Please provide a valid e-mail address");
+            return false;
+        } elseif (!$input['is_checked']) {
+            $this->setErrorMsg("You must accept the terms and conditions");
+            return false;
+        } elseif (preg_match($emailDomainPattern, strtolower($input['email_name']))) {
+            $this->setErrorMsg("We are not accepting subscriptions from Colombia emails");
             return false;
         }
-        if (!isset($input['lastname'])) {
-            return false;
-        }
+
         return true;
     }
 
-    private function unprocessableEntityResponse()
+    private function unprocessableEntityResponse($errorMsg)
     {
         $response['status_code_header'] = 'HTTP/1.1 422 Unprocessable Entity';
-        $response['body'] = json_encode([
-            'error' => 'Invalid input'
-        ]);
+        $response['body'] = json_encode(
+            [
+                'error' => $errorMsg
+            ]
+        );
         return $response;
     }
 
@@ -134,5 +160,25 @@ class EmailController
         $response['status_code_header'] = 'HTTP/1.1 404 Not Found';
         $response['body'] = null;
         return $response;
+    }
+
+    /**
+     * Get the value of errorMsg
+     */
+    public function getErrorMsg()
+    {
+        return $this->errorMsg;
+    }
+
+    /**
+     * Set the value of errorMsg
+     *
+     * @return self
+     */
+    public function setErrorMsg($errorMsg)
+    {
+        $this->errorMsg = $errorMsg;
+
+        return $this;
     }
 }

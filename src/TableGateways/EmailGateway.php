@@ -4,7 +4,6 @@ namespace Src\TableGateways;
 
 class EmailGateway
 {
-
     private $db = null;
 
     public function __construct($db)
@@ -12,7 +11,7 @@ class EmailGateway
         $this->db = $db;
     }
 
-    public function findAll($id, $search, $emailFilter, $orderBy, $order)
+    public function findAll($search, $emailFilter, $orderBy, $order)
     {
 
         $statement = '
@@ -35,7 +34,7 @@ class EmailGateway
 
         try {
             $statement = $this->db->prepare($statement);
-            $statement->execute(array($id));
+            $statement->execute();
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $result;
         } catch (\PDOException $e) {
@@ -66,13 +65,13 @@ class EmailGateway
 
     public function group()
     {
-        $statement = "
-        SELECT   
-            substring_index(email_name, \'@\', -1) AS \'domain\', count(*) AS \'COUNT\'
-        FROM     
-            emails
-        GROUP BY 
-            domain";
+
+        $statement =
+            "SELECT substring_index(email_name, '@', -1) AS 'DOMAIN', count(*) AS 'COUNT'
+            FROM     
+                emails
+            GROUP BY 
+                DOMAIN;";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -98,9 +97,11 @@ class EmailGateway
 
             // need validation
 
-            $statement->execute(array(
-                'email_name' => $input['email_name'],
-            ));
+            $statement->execute(
+                array(
+                    'email_name' => $input['email_name'],
+                )
+            );
             return $statement->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());
