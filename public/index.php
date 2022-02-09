@@ -4,11 +4,25 @@ require "../bootstrap.php";
 
 use Src\Controller\EmailController;
 
+$requestMethod = $_SERVER['REQUEST_METHOD'];
+
+// Is this a pre-flight request (the request method is OPTIONS)? Then start output buffering.
+if ($requestMethod === 'OPTIONS') {
+    ob_start();
+}
+
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: OPTIONS,GET,POST,PUT,DELETE");
+header("Access-Control-Allow-Methods: OPTIONS,GET,POST,DELETE");
 header("Access-Control-Max-Age: 3600");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+header("Access-Control-Allow-Headers: Content-Type, X-Requested-With, Access-Control-Allow-Headers, 
+Access-Control-Allow-Methods, Access-Control-Request-Method, Access-Control-Request-Headers");
+
+// If this is a pre-flight request (the request method is OPTIONS)? Then flush the output buffer and exit.
+if ($requestMethod === 'OPTIONS') {
+    ob_end_flush();
+    exit();
+}
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = explode('/', $uri);
@@ -45,7 +59,9 @@ if (isset($_GET['order'])) {
     $order = (string) $_GET['order'];
 }
 
+
 $requestMethod = $_SERVER["REQUEST_METHOD"];
+
 
 // pass the request method and params to the EmailController and process the HTTP request:
 $controller = new EmailController($dbConnection, $requestMethod, $emailId, $search, $emailFilter, $orderBy, $order);

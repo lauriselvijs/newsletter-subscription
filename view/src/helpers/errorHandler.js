@@ -1,7 +1,6 @@
 const errorHandler = (email, checked, setError, setErrorMsg, msg = true) => {
   if (!email) {
     setError(true);
-    sssssss;
     setErrorMsg(msg ? "Email address is required" : "");
   } else if (!checked) {
     setError(true);

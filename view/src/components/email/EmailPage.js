@@ -16,34 +16,19 @@ function EmailPage() {
   const [activeDateBtn, setActiveDateBtn] = useState(true);
   const [emailList, setEmailList] = useState([]);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [resultsPerPage, setResultsPerPage] = useState(5);
-  const [totalPages, setTotalPages] = useState(null);
-
   const fetchData = async () => {
     try {
-      const newEmailData = await axios.post(
-        `http://localhost/magebit_test/api/emails/pagination.php?page=${currentPage}&results_per_page=${resultsPerPage}`,
-        {
+      const newEmailData = await axios.get("http://localhost/emails/public/", {
+        params: {
           search: searchText,
           order_by: orderBy,
           order: sortOrder,
           email_filter: groupBy,
-        }
-      );
+        },
+      });
 
-      const filtredEmailData = newEmailData.data.data.filter(
-        (email) => email.page_count == null && email.email_name !== ""
-      );
-
-      setEmailData(filtredEmailData);
-
-      // Get total pages
-      const pageCount = newEmailData.data.data.filter(
-        (email) => email.page_count
-      );
-
-      setTotalPages(pageCount[0].page_count);
+      console.log(newEmailData.data);
+      setEmailData(newEmailData.data);
     } catch (error) {
       console.log(error);
 
@@ -53,10 +38,8 @@ function EmailPage() {
 
   const filterDataByEmail = async () => {
     try {
-      const emailList = await axios.get(
-        "http://localhost/magebit_test/api/emails/group_by_name.php"
-      );
-      setEmailList(emailList.data.data);
+      const emailList = await axios.get("http://localhost/emails/public/");
+      setEmailList(emailList.data);
     } catch (error) {
       console.log(error);
 
@@ -67,18 +50,16 @@ function EmailPage() {
   useEffect(() => {
     fetchData();
     filterDataByEmail();
-  }, [orderBy, searchText, groupBy, currentPage]);
+  }, [orderBy, searchText, groupBy]);
 
   const deleteNote = async (emailID) => {
     const newEmailData = emailData.filter((email) => email.id !== emailID);
     setEmailData(newEmailData);
 
     try {
-      await axios.delete(
-        "http://localhost/magebit_test/api/emails/delete_email.php",
-        { data: { id: emailID } }
-      );
-      console.log(emailID);
+      await axios.delete("http://localhost/emails/public/", {
+        params: { email_id: emailID },
+      });
     } catch (error) {
       console.log(error);
 
@@ -115,14 +96,6 @@ function EmailPage() {
     setActiveNameBtn(false);
   };
 
-  const onNextPage = () => {
-    totalPages > currentPage && setCurrentPage(currentPage + 1);
-  };
-
-  const onPrevPage = () => {
-    currentPage > 1 && setCurrentPage(currentPage - 1);
-  };
-
   return (
     <div>
       <h1>Emails</h1>
@@ -141,15 +114,6 @@ function EmailPage() {
           ))}
         </tbody>
       </table>
-      <button className="back-btn" onClick={() => onPrevPage()}>
-        Back
-      </button>
-      <span className="current-page">
-        {currentPage} of {totalPages}
-      </span>
-      <button className="forward-btn" onClick={() => onNextPage()}>
-        Next
-      </button>
       <button
         onClick={() => onSortbyName()}
         className={activeNameBtn ? "sort-by-name-active" : "sort-by-name"}
@@ -181,7 +145,7 @@ function EmailPage() {
         Download CSV
       </CSVLink>
       {emailList.map((email, index) => {
-        const domain = email.domain.substring(0, email.domain.indexOf("."));
+        const domain = email.DOMAIN.substring(0, email.DOMAIN.indexOf("."));
         const buttonName = domain.charAt(0).toUpperCase() + domain.slice(1);
         return buttonName ? (
           <EmailButton

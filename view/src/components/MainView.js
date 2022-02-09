@@ -31,12 +31,11 @@ function MainView() {
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
     if (email !== "" && checked) {
-      console.log(email);
       try {
-        await axios.post(
-          "http://localhost/magebit_test/api/emails/create_email.php",
-          { email_name: email }
-        );
+        await axios.post("http://localhost/emails/public/", {
+          email_name: email,
+          is_checked: checked,
+        });
 
         setError(false);
         setSuccess(true);
