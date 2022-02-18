@@ -15,8 +15,7 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: OPTIONS,GET,POST,DELETE");
 header("Access-Control-Max-Age: 3600");
-header("Access-Control-Allow-Headers: Content-Type, X-Requested-With, Access-Control-Allow-Headers, 
-Access-Control-Allow-Methods, Access-Control-Request-Method, Access-Control-Request-Headers");
+header("Access-Control-Allow-Headers: Content-Type, X-Requested-With, Access-Control-Allow-Headers, Access-Control-Allow-Methods, Access-Control-Request-Method, Access-Control-Request-Headers");
 
 // If this is a pre-flight request (the request method is OPTIONS)? Then flush the output buffer and exit.
 if ($requestMethod === 'OPTIONS') {
