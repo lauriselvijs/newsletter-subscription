@@ -94,9 +94,7 @@ class EmailGateway
 
         try {
             $statement = $this->db->prepare($statement);
-
-            // need validation
-
+            
             $statement->execute(
                 array(
                     'email_name' => $input['email_name'],
