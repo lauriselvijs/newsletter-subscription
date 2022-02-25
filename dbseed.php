@@ -12,7 +12,7 @@ $statement = <<<EOS
         UNIQUE KEY email_name (email_name)
     ) ENGINE=INNODB;
     INSERT INTO emails
-        (email_name, lastname, firstparent_id, secondparent_id)
+        (email_name)
     VALUES
         ('john@gmail.com'),
         ('chris@gmail.com'),
