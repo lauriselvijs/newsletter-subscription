@@ -1,12 +1,12 @@
-import React from "react";
-import "../styles/css/social-icons.css";
-import PropTypes from "prop-types";
+import React from "react"
+import "../styles/css/social-icons.css"
+import PropTypes from "prop-types"
 
-function SocialIcons({
+function SocialIcons ({
   classFacebookIcon,
   classInstagramIcon,
   classTwitterIcon,
-  classYoutubeIcon,
+  classYoutubeIcon
 }) {
   return (
     <>
@@ -15,21 +15,21 @@ function SocialIcons({
       <div className={classTwitterIcon} />
       <div className={classYoutubeIcon} />
     </>
-  );
+  )
 }
 
 SocialIcons.propTypes = {
   classFacebookIcon: PropTypes.string,
   classInstagramIcon: PropTypes.string,
   classTwitterIcon: PropTypes.string,
-  classYoutubeIcon: PropTypes.string,
-};
+  classYoutubeIcon: PropTypes.string
+}
 
 SocialIcons.defaultProps = {
   classFacebookIcon: "facebook-icon",
   classInstagramIcon: "instagram-icon",
   classTwitterIcon: "twitter-icon",
-  classYoutubeIcon: "youtube-icon",
-};
+  classYoutubeIcon: "youtube-icon"
+}
 
-export default SocialIcons;
+export default SocialIcons

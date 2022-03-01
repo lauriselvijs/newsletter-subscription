@@ -1,9 +1,9 @@
-import React from "react";
-import "../styles/css/success.css";
-import ICSuccess from "../images/ic_success.svg";
-import PropTypes from "prop-types";
+import React from "react"
+import "../styles/css/success.css"
+import ICSuccess from "../images/ic_success.svg"
+import PropTypes from "prop-types"
 
-function Success({ classHeadingSuc, classSubheadingSuc, classICSuccess }) {
+function Success ({ classHeadingSuc, classSubheadingSuc, classICSuccess }) {
   return (
     <>
       <img className={classICSuccess} src={ICSuccess} alt="Success logo" />
@@ -13,19 +13,19 @@ function Success({ classHeadingSuc, classSubheadingSuc, classICSuccess }) {
         for the discount code.
       </div>
     </>
-  );
+  )
 }
 
 Success.propTypes = {
   classHeadingSuc: PropTypes.string,
   classSubheadingSuc: PropTypes.string,
-  classICSuccess: PropTypes.string,
-};
+  classICSuccess: PropTypes.string
+}
 
 Success.defaultProps = {
   classHeadingSuc: "ic-success",
   classSubheadingSuc: "success-heading",
-  classICSuccess: "success-subheading",
-};
+  classICSuccess: "success-subheading"
+}
 
-export default Success;
+export default Success

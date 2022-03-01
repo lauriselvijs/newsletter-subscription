@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from "react"
+import PropTypes from "prop-types"
 
-function EmailInfo({ email: { email_name, created_at }, onDelete }) {
+function EmailInfo ({ email: { email_name, created_at }, onDelete }) {
   return (
     <>
       <tr>
@@ -11,17 +11,17 @@ function EmailInfo({ email: { email_name, created_at }, onDelete }) {
         <td>{created_at}</td>
       </tr>
     </>
-  );
+  )
 }
 
 EmailInfo.propTypes = {
   email: PropTypes.object,
-  onFiltre: PropTypes.func,
-};
+  onDelete: PropTypes.func
+}
 
 EmailInfo.defaultProps = {
   email: { email_name: "test@gmail.com", created_at: "01/01/2000" },
-  onFiltre: () => {},
-};
+  onDelete: () => {}
+}
 
-export default EmailInfo;
+export default EmailInfo

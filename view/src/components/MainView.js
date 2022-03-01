@@ -1,63 +1,62 @@
-import React from "react";
-import "../styles/css/main-view.css";
-import ImageSummer from "../images/image_summer.png";
-import { useState, useEffect } from "react";
-import errorHandler from "../helpers/errorHandler";
-import axios from "axios";
-import Success from "../components/Success";
-import Header from "./Header";
-import SocialIcons from "../components/SocialIcons";
-import TextArea from "./TextArea";
-import Input from "../components/Input";
-import TermsOfService from "../components/TermsOfService";
-import ErrorMsg from "../components/ErrorMsg";
-import PineappleLogo from "../images/logo_pineapple.svg";
+import React, { useState, useEffect } from "react"
+import "../styles/css/main-view.css"
+import ImageSummer from "../images/image_summer.png"
+import errorHandler from "../helpers/errorHandler"
+import axios from "axios"
+import Success from "../components/Success"
+import Header from "./Header"
+import SocialIcons from "../components/SocialIcons"
+import TextArea from "./TextArea"
+import Input from "../components/Input"
+import TermsOfService from "../components/TermsOfService"
+import ErrorMsg from "../components/ErrorMsg"
+import PineappleLogo from "../images/logo_pineapple.svg"
 
-function MainView() {
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
-  const [success, setSuccess] = useState(false);
-  const [submitButtonDisabled, setSubmitButtonDisable] = useState(true);
-  const [checked, setChecked] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
+function MainView () {
+  const [email, setEmail] = useState("")
+  const [error, setError] = useState(false)
+  const [errorMsg, setErrorMsg] = useState("")
+  const [success, setSuccess] = useState(false)
+  const [submitButtonDisabled, setSubmitButtonDisable] = useState(true)
+  const [checked, setChecked] = useState(false)
+  const [isFocused, setIsFocused] = useState(false)
 
   useEffect(() => {
     if (errorHandler(email, checked, setError, setErrorMsg, isFocused)) {
-      setSubmitButtonDisable(false);
+      setSubmitButtonDisable(false)
     }
-  }, [email, checked, isFocused]);
+  }, [email, checked, isFocused])
 
   const handleEmailSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const hostname = window.location.hostname;
-    const protocol = window.location.protocol;
+    const hostname = window.location.hostname
+    const protocol = window.location.protocol
 
     if (email !== "" && checked) {
       try {
         await axios.post(`${protocol}//${hostname}/emails/public/`, {
           email_name: email,
-          is_checked: checked,
-        });
+          is_checked: checked
+        })
 
-        setError(false);
-        setSuccess(true);
+        setError(false)
+        setSuccess(true)
       } catch (error) {
-        console.log(error);
+        console.log(error)
 
-        return error;
+        return error
       }
     }
-  };
+  }
 
   const handleCheckMark = () => {
-    setChecked(!checked);
-  };
+    setChecked(!checked)
+  }
 
   const handleInputErrors = () => {
-    setIsFocused(true);
-  };
+    setIsFocused(true)
+  }
 
   return (
     <div className="desktop">
@@ -70,7 +69,8 @@ function MainView() {
           PineappleLogo={PineappleLogo}
           classEmailData={"email-data"}
         />
-        {success ? (
+        {success
+          ? (
           <>
             <Success
               classHeadingSuc={"success-heading"}
@@ -78,7 +78,8 @@ function MainView() {
               classICSuccess={"ic-success"}
             />
           </>
-        ) : (
+            )
+          : (
           <>
             <TextArea classHeader={"header"} classSubheader={"subheading"} />
             <Input
@@ -90,11 +91,13 @@ function MainView() {
               classInputBox={"input-box"}
               classICArrow={"ic-arrow"}
             />
-            {error ? (
+            {error
+              ? (
               <ErrorMsg errorMsg={errorMsg} classError="error-ms" />
-            ) : (
-              ""
-            )}
+                )
+              : (
+                  ""
+                )}
             <div className="vertical-line"></div>
             <TermsOfService
               handleCheckMark={() => handleCheckMark()}
@@ -103,7 +106,7 @@ function MainView() {
               classAgree={"agree-text"}
             />
           </>
-        )}
+            )}
 
         <div className="horizontal-line"></div>
         <SocialIcons
@@ -115,7 +118,7 @@ function MainView() {
       </div>
       <img src={ImageSummer} alt="pineapples" className="image-summer" />
     </div>
-  );
+  )
 }
 
-export default MainView;
+export default MainView

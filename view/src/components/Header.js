@@ -1,16 +1,16 @@
-import React from "react";
-import PineappleLogo from "../images/logo_pineapple.svg";
-import { Link } from "react-router-dom";
-import "../styles/css/header.css";
-import PropTypes from "prop-types";
+import React from "react"
+import PineappleLogo from "../images/logo_pineapple.svg"
+import { Link } from "react-router-dom"
+import "../styles/css/header.css"
+import PropTypes from "prop-types"
 
-function Header({
+function Header ({
   classPineapplesLogo,
   classAbout,
   classHowItWorks,
   classContact,
   PineappleLogo,
-  classEmailData,
+  classEmailData
 }) {
   return (
     <>
@@ -32,7 +32,7 @@ function Header({
         Contact
       </a>
     </>
-  );
+  )
 }
 
 Header.propTypes = {
@@ -41,8 +41,8 @@ Header.propTypes = {
   classHowItWorks: PropTypes.string,
   classContact: PropTypes.string,
   PineappleLogo: PropTypes.string,
-  classEmailData: PropTypes.string,
-};
+  classEmailData: PropTypes.string
+}
 
 Header.defaultProps = {
   classPineapplesLogo: "pineapples-logo",
@@ -50,7 +50,7 @@ Header.defaultProps = {
   classHowItWorks: "how-it-works",
   classContact: "contact",
   classEmailData: "email-data",
-  PineappleLogo: { PineappleLogo },
-};
+  PineappleLogo: { PineappleLogo }
+}
 
-export default Header;
+export default Header

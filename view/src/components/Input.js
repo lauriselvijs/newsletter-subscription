@@ -1,16 +1,16 @@
-import React from "react";
-import "../styles/css/input.css";
-import ICArrow from "../images/ic_arrow.svg";
-import PropTypes from "prop-types";
+import React from "react"
+import "../styles/css/input.css"
+import ICArrow from "../images/ic_arrow.svg"
+import PropTypes from "prop-types"
 
-function Input({
+function Input ({
   email,
   setEmail,
   handleInputErrors,
   submitButtonDisabled,
   handleEmailSubmit,
   classInputBox,
-  classICArrow,
+  classICArrow
 }) {
   return (
     <>
@@ -31,7 +31,7 @@ function Input({
         className={classICArrow}
       />
     </>
-  );
+  )
 }
 
 Input.propTypes = {
@@ -41,8 +41,8 @@ Input.propTypes = {
   submitButtonDisabled: PropTypes.bool,
   handleEmailSubmit: PropTypes.func,
   classInputBox: PropTypes.string,
-  classICArrow: PropTypes.string,
-};
+  classICArrow: PropTypes.string
+}
 
 Input.defaultProps = {
   email: "Email",
@@ -51,7 +51,7 @@ Input.defaultProps = {
   submitButtonDisabled: true,
   handleEmailSubmit: () => {},
   classInputBox: "input-box",
-  classICArrow: "ic-arrow",
-};
+  classICArrow: "ic-arrow"
+}
 
-export default Input;
+export default Input
