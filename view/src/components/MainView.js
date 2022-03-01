@@ -30,9 +30,13 @@ function MainView() {
 
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
+
+    const hostname = window.location.hostname;
+    const protocol = window.location.protocol;
+
     if (email !== "" && checked) {
       try {
-        await axios.post("http://localhost/emails/public/", {
+        await axios.post(`${protocol}//${hostname}/emails/public/`, {
           email_name: email,
           is_checked: checked,
         });

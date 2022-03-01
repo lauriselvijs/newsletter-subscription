@@ -17,17 +17,22 @@ function EmailPage() {
   const [emailList, setEmailList] = useState([]);
 
   const fetchData = async () => {
-    try {
-      const newEmailData = await axios.get("http://localhost/emails/public/", {
-        params: {
-          search: searchText,
-          order_by: orderBy,
-          order: sortOrder,
-          email_filter: groupBy,
-        },
-      });
+    const hostname = window.location.hostname;
+    const protocol = window.location.protocol;
 
-      console.log(newEmailData.data);
+    try {
+      const newEmailData = await axios.get(
+        `${protocol}//${hostname}/emails/public/`,
+        {
+          params: {
+            search: searchText,
+            order_by: orderBy,
+            order: sortOrder,
+            email_filter: groupBy,
+          },
+        }
+      );
+
       setEmailData(newEmailData.data);
     } catch (error) {
       console.log(error);
@@ -37,8 +42,13 @@ function EmailPage() {
   };
 
   const filterDataByEmail = async () => {
+    const hostname = window.location.hostname;
+    const protocol = window.location.protocol;
+
     try {
-      const emailList = await axios.get("http://localhost/emails/public/");
+      const emailList = await axios.get(
+        `${protocol}//${hostname}/emails/public/`
+      );
       setEmailList(emailList.data);
     } catch (error) {
       console.log(error);
@@ -56,8 +66,11 @@ function EmailPage() {
     const newEmailData = emailData.filter((email) => email.id !== emailID);
     setEmailData(newEmailData);
 
+    const hostname = window.location.hostname;
+    const protocol = window.location.protocol;
+
     try {
-      await axios.delete("http://localhost/emails/public/", {
+      await axios.delete(`${protocol}//${hostname}/emails/public/`, {
         params: { email_id: emailID },
       });
     } catch (error) {
