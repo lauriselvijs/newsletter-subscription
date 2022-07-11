@@ -1,58 +1,46 @@
-import React, { useState, useEffect } from "react"
-import "../../styles/css/main-view-mobile.css"
-import ImageSummerMobile from "../../images/image_summer.png"
-import errorHandler from "../../helpers/errorHandler"
-import axios from "axios"
-import Header from "../Header"
-import Success from "../Success"
-import PineappleLogoMobile from "../../images/mobile/logo_pineapple_mobile.svg"
-import TextArea from "../TextArea"
-import Input from "../Input"
-import TermsOfService from "../TermsOfService"
-import SocialIcons from "../SocialIcons"
+import React, { useState, useEffect } from "react";
+import "../../styles/css/main-view-mobile.css";
+import ImageSummerMobile from "../../images/image_summer.png";
+import errorHandler from "../../helpers/errorHandler";
+import Header from "../Header";
+import Success from "../Success";
+import PineappleLogoMobile from "../../images/mobile/logo_pineapple_mobile.svg";
+import TextArea from "../TextArea";
+import Input from "../Input";
+import TermsOfService from "../TermsOfService";
+import SocialIcons from "../SocialIcons";
 
-function MainVIew () {
-  const [email, setEmail] = useState("")
-  const [error, setError] = useState(false)
-  const [errorMsg, setErrorMsg] = useState("")
-  const [success, setSuccess] = useState(false)
-  const [submitButtonDisabled, setSubmitButtonDisable] = useState(true)
-  const [checked, setChecked] = useState(false)
-  const [isFocused, setIsFocused] = useState(false)
+function MainVIew() {
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [submitButtonDisabled, setSubmitButtonDisable] = useState(true);
+  const [checked, setChecked] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
 
   useEffect(() => {
     if (errorHandler(email, checked, setError, setErrorMsg, isFocused)) {
-      setSubmitButtonDisable(false)
+      setSubmitButtonDisable(false);
     }
-  }, [email, checked, isFocused])
+  }, [email, checked, isFocused]);
 
   const handleEmailSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (email && checked) {
-      try {
-        await axios.post(
-          "http://localhost/magebit_test/api/emails/create_email.php",
-          { email_name: email }
-        )
-
-        setError(false)
-        setSuccess(true)
-      } catch (error) {
-        console.log(error)
-
-        return error
-      }
+      setError(false);
+      setSuccess(true);
     }
-  }
+  };
 
   const handleCheckMark = () => {
-    setChecked(!checked)
-  }
+    setChecked(!checked);
+  };
 
   const handleInputErrors = () => {
-    setIsFocused(true)
-  }
+    setIsFocused(true);
+  };
 
   return (
     <div className="mobile">
@@ -66,8 +54,7 @@ function MainVIew () {
       />
       <div className="base-section-mobile">
         <span className="content-mobile"></span>
-        {success
-          ? (
+        {success ? (
           <>
             <Success
               classHeadingSuc={"success-ms-heading-mobile"}
@@ -75,8 +62,7 @@ function MainVIew () {
               classICSuccess={"ic-success-mobile"}
             />
           </>
-            )
-          : (
+        ) : (
           <>
             <TextArea
               classHeader={"header-mobile"}
@@ -101,7 +87,7 @@ function MainVIew () {
             />
             <div className="horizontal-line-mobile"></div>
           </>
-            )}
+        )}
         <div className="base-section-mobile">
           <span className="content-mobile"></span>
           <SocialIcons
@@ -118,7 +104,7 @@ function MainVIew () {
         className="image-summer-mobile"
       />
     </div>
-  )
+  );
 }
 
-export default MainVIew
+export default MainVIew;

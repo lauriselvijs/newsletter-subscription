@@ -1,85 +1,70 @@
-# Simple REST API back-end in PHP with React.js front-end
+# Getting Started with Create React App
 
-This example shows how to configure back-end and front-end of this application
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-**Prerequisites:** PHP, Composer, MySQL, Node.js, Apache or NGINX
+## Available Scripts
 
-## Getting Started
+In the project directory, you can run:
 
-To install <b>Composer</b> follow these directions in https://getcomposer.org/download/\
+### `npm start`
 
-To install <b>Node.js</b> follow these directions in https://nodejs.org/en/\
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-To install configure <b>MySQL</b> follow these directions in https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/\
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-To install configure <b>Apache</b> follow these directions in https://httpd.apache.org/docs/2.4/install.html or
-to install configure <b>NGINX</b> follow these directions in https://www.nginx.com/resources/wiki/start/topics/tutorials/install/\
+### `npm test`
 
-Clone this project using the following commands:
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-```
-git@github.com:lauriselvijs/magebit-test.git
-cd magebit-test
-```
+### `npm run build`
 
-### Configure the application
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-Create the database and user for the project:
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-```
-mysql -uroot -p
-CREATE DATABASE magebit_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE USER 'username'@'localhost' identified by 'password';
-GRANT ALL on api_example.* to 'username'@'localhost';
-quit
-```
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-Create and edit the `.env` file and enter your database details there:
+### `npm run eject`
 
-```
-DB_HOST="localhost"
-DB_PORT=3306
-DB_DATABASE="magebit_db"
-DB_USERNAME="username"
-DB_PASSWORD="password"
-```
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-Copy `.env` file in in your root folder directory:
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-```
-cp .env ~/magebit-test
-```
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-Install the project dependencies and start the PHP server:
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-```
-cd magebit-test
-composer install
-cd public
-php -S localhost:8000
-```
+## Learn More
 
-To seed db run following commands:
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-```
-cd magebit-test
-php dbseed.php
-```
+To learn React, check out the [React documentation](https://reactjs.org/).
 
-Go to your view folder in root directory and install front-end dependencies and start react project:
+### Code Splitting
 
-```
-cd magebit-test/view
-npm i or yarn install
-npm start or yarn start
-```
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-NOTE: if using a virtual machine and NAT, you might need to run the server as `php -S localhost:8000 -t public` instead.
+### Analyzing the Bundle Size
 
-## Help
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-Please post any issues in Github issues section. You can also email lauriselvijsm@gmail.com for any comments or questions.
+### Making a Progressive Web App
 
-## License
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-Apache 2.0, see [LICENSE](LICENSE).
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

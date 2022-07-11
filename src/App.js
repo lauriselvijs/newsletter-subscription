@@ -1,12 +1,11 @@
-import React from "react"
-import "./App.css"
-import MainView from "./components/MainView"
-import MainViewMobile from "./components/mobile/MainVIewMobile"
-import EmailPage from "./components/email/EmailPage"
-import { HashRouter as Router, Route, Routes } from "react-router-dom"
-import MediaQuery from "react-responsive"
+import React from "react";
+import "./App.css";
+import MainView from "./components/MainView";
+import MainViewMobile from "./components/mobile/MainVIewMobile";
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
+import MediaQuery from "react-responsive";
 
-function App () {
+function App() {
   return (
     <div className="App">
       <Router>
@@ -24,12 +23,10 @@ function App () {
               </>
             }
           ></Route>
-
-          <Route path="/email-data" element={<EmailPage />}></Route>
         </Routes>
       </Router>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
